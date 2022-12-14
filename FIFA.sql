@@ -5,14 +5,14 @@ FROM [Portfolio Project].[dbo].[FIFA 22 CLEAN]
 
 -- Viewing top 10 young players to sign for free after 2023
 
-SELECT TOP 10 [NAME], [AGE], [Contract Valid Until], [OVERALL], [POTENTIAL], [VALUE], [WAGE], Photo
+SELECT TOP 10 [NAME], [Best Position], [AGE], NATIONALITY, [Contract Valid Until], [OVERALL], [POTENTIAL], [VALUE], [WAGE], Photo
 FROM [Portfolio Project].[dbo].[FIFA 22 CLEAN]
 WHERE [Contract Valid Until] = 2023 AND [Age] <= 23
 ORDER BY Potential DESC
 
 -- Viewing top young players potential in each positions
 
-SELECT CLEAN.[Best Position], CLEAN.[Name], CLEAN.[AGE], CLEAN.[Overall] , CLEAN.[Potential], CLEAN.[VALUE], CLEAN.[WAGE], CLEAN.Photo
+SELECT CLEAN.[Name], CLEAN.[Best Position], CLEAN.[AGE], NATIONALITY, CLEAN.[Overall] , CLEAN.[Potential], CLEAN.[VALUE], CLEAN.[WAGE], CLEAN.Photo
 FROM [Portfolio Project].[dbo].[FIFA 22 CLEAN] AS CLEAN,
 	(SELECT [Best Position], MAX([Potential]) AS MAXPOT
 	FROM [Portfolio Project].[dbo].[FIFA 22 CLEAN]
@@ -34,9 +34,9 @@ SELECT *
 FROM [Portfolio Project].[dbo].[FIFA 22 CLEAN] AS CLEAN
 INNER JOIN [Portfolio Project].[dbo].[FIFA WORLD RANKING] AS RANKING ON CLEAN.Nationality = RANKING.Team
 
--- Viewing the top  20 FIFA RANKED countries with high potential young players
+-- Viewing young players with high potential 
 
-SELECT CLEAN.Name, MAXBYRANKING.Nationality, CLEAN.POTENTIAL
+SELECT CLEAN.Name, CLEAN.[Best Position], CLEAN.AGE, MAXBYRANKING.Nationality, CLEAN.Overall, CLEAN.POTENTIAL, Value, Wage, Photo
 FROM [Portfolio Project].[dbo].[FIFA 22 CLEAN] AS CLEAN,
 	(SELECT MAX(Potential) AS MAXPOT, Nationality
 	FROM [Portfolio Project].[dbo].[FIFA 22 CLEAN] AS CLEAN
